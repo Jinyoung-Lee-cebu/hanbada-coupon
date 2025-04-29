@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한바다 식당 - 10% 할인쿠폰</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 40px; background: #f9f9f9; }
+    .container { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    img { width: 120px; margin-bottom: 20px; }
+    h1 { font-size: 24px; margin-bottom: 10px; }
+    p { font-size: 16px; color: #555; }
+    .expired { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+<div class="container" id="coupon">
+  <img src="https://cdn-icons-png.flaticon.com/512/2331/2331970.png" alt="Coupon">
+  <h1>한바다 식당</h1>
+  <h2>10% 할인쿠폰</h2>
+  <p id="message">발급일로부터 7일간 사용 가능합니다.</p>
+</div>
+<script>
+  const STORAGE_KEY = 'coupon_issue_date';
+  const now = new Date();
+  if (!localStorage.getItem(STORAGE_KEY)) {
+    localStorage.setItem(STORAGE_KEY, now.getTime());
+  }
+  const issueDate = new Date(parseInt(localStorage.getItem(STORAGE_KEY)));
+  const expiryDate = new Date(issueDate);
+  expiryDate.setDate(issueDate.getDate() + 7);
+  if (now > expiryDate) {
+    document.getElementById('message').innerHTML = '<span class="expired">쿠폰 유효기간이 만료되었습니다.</span>';
+  }
+</script>
+</body>
+</html>
